@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { newItemProps } from '../AddItem'
 
-const AreaAddItem = ({ newItem, onChange, setNewItem }) => {
+const AreaAddItem: React.FC<newItemProps> = ({ newItem, onChange, setNewItem }) => {
 
   const [valueSite, setValueSite] = useState('')
+  const [valueLogin, setValueLogin] = useState('')
   const [valuePassword, setValuePassword] = useState('')
 
   const clearInput = () => {
@@ -10,20 +12,32 @@ const AreaAddItem = ({ newItem, onChange, setNewItem }) => {
     setValuePassword('')
   }
 
-  const onChangeSite = (event) => {
+  const onChangeSite = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValueSite(event.target.value)
     setNewItem({
       site: event.target.value,
+      login: newItem.login,
       password: newItem.password,
       id: newItem.id
     })
   }
 
-  const onChangePassword = (event) => {
+  const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValuePassword(event.target.value)
     setNewItem({
       site: newItem.site,
+      login: newItem.login,
       password: event.target.value,
+      id: newItem.id
+    })
+  }
+
+  const onChangeLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValueLogin(event.target.value)
+    setNewItem({
+      site: newItem.site,
+      login: event.target.value,
+      password: newItem.password,
       id: newItem.id
     })
   }
@@ -34,6 +48,10 @@ const AreaAddItem = ({ newItem, onChange, setNewItem }) => {
       <div>
         <span>site</span>
         <input value={valueSite} onChange={onChangeSite} />
+      </div>
+      <div>
+        <span>login</span>
+        <input value={valueLogin} onChange={onChangeLogin} />
       </div>
       <div>
         <span>password</span>

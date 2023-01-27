@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import AreaAddItem from '../AreaAddItem'
+import { newItem } from '../Home'
 
+export type newItemProps = {
+  newItem: newItem,
+  onChange: (item: any) => void,
+  setNewItem: (item: newItem) => void
+}
 
-const AddItem = ({ newItem, onChange, setNewItem }) => {
+const AddItem: React.FC<newItemProps> = ({ newItem, onChange, setNewItem }) => {
 
   const [selectButton, setSelectButton] = useState(false)
-  const onClickButton = (selectButton) => {
+  const onClickButton = (selectButton: boolean) => {
     setSelectButton(!selectButton)
   }
 
