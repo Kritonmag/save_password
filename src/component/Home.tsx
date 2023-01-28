@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import AddItem from './AddItem';
+import InfoLoginPass from './InfoLoginPass';
+import './scss/app.css'
 
 export type newItem = {
   site: string;
@@ -42,42 +44,72 @@ const Home: React.FC = () => {
   ])
 
   const onChange = (item: newItem) => {
-    setImportantData([...importantData, item])
-    setNewItem({
-      site: '',
-      login: '',
-      password: '',
-      id: newItem.id + 1
-    })
+    if (item.site !== '' || item.login !== '' || item.password !== '') {
+      setImportantData([...importantData, item])
+      setNewItem({
+        site: '',
+        login: '',
+        password: '',
+        id: newItem.id + 1
+      })
+    } else {
+      alert('error')
+    }
   }
 
   const onSelect = (item: newItem) => {
-    setSelectItem({
-      site: item.site,
-      login: item.login,
-      password: item.password,
-      id: item.id
-    })
+    if (selectItem.site !== item.site) {
+      setSelectItem({
+        site: item.site,
+        login: item.login,
+        password: item.password,
+        id: item.id
+      })
+    } else {
+      setSelectItem({
+        site: '',
+        login: '',
+        password: '',
+        id: 0
+      })
+    }
+  }
+
+  const onEditItem = (item: newItem) => {
+    let filtered = importantData.filter(function (obj) {
+      return obj.id == item.id
+    });
+    filtered.forEach(function (el) {
+      el.site = item.site;
+      el.login = item.login;
+      el.password = item.password;
+      el.id = item.id;
+    });
+    setImportantData(importantData)
+    console.log(importantData)
   }
 
   return (
-    <>
+    <div className='wrapper'>
       <h1>SAVE PASSWORD</h1>
       <AddItem newItem={newItem} onChange={onChange} setNewItem={setNewItem} />
-      <ul>
-        {
-          importantData.map((item) => {
-            return <li key={item.id} onClick={() => onSelect(item)}>{item.site}</li>
-          })
-        }
-      </ul>
-      <div>
-        <div>Название сайта<span>  {selectItem.site}</span></div>
-        <div>LOGIN<span>   {selectItem.login}</span></div>
-        <div>PASSWORD<span>  {selectItem.password}</span></div>
+      <div className='content-area'>
+        <ul className='content-list'>
+          {
+            importantData.map((item) => {
+              return <li key={item.id} onClick={() => onSelect(item)}>{item.site}</li>
+            })
+          }
+        </ul>
+        <div>
+          {selectItem.site !== '' ?
+            <InfoLoginPass
+              selectItem={selectItem}
+              setSelectItem={setSelectItem}
+              onEditItem={onEditItem} /> : <></>}
+        </div>
       </div>
-      {/* <button onClick={() => onChange(newItem)}>ADD NEW SITE AND PASSWORD</button> */}
-    </>
+    </div>
   )
 }
 

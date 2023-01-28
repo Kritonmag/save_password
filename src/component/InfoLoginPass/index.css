@@ -1,0 +1,36 @@
+.SiteAndPassword {
+  display: flex;
+}
+
+.column-login {
+  margin-bottom: 25px;
+}
+
+.column-login-info {
+  display: flex;
+}
+
+.login-info {
+  margin-right: 10px;
+}
+
+.edit-btn {
+  cursor: pointer;
+  background-color: red;
+}
+
+.column-password-info {
+  display: flex;
+}
+
+.no-visibility-password {
+  margin-right: 10px;
+  color: black;
+  background-color: black;
+  cursor: pointer;
+}
+
+.visibility-password {
+  margin-right: 10px;
+  cursor: pointer;
+}
